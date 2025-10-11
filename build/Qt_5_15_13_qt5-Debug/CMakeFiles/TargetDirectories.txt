@@ -1,0 +1,9 @@
+/home/ysy/TubeX/build/Qt_5_15_13_qt5-Debug/CMakeFiles/TubeX.dir
+/home/ysy/TubeX/build/Qt_5_15_13_qt5-Debug/CMakeFiles/edit_cache.dir
+/home/ysy/TubeX/build/Qt_5_15_13_qt5-Debug/CMakeFiles/rebuild_cache.dir
+/home/ysy/TubeX/build/Qt_5_15_13_qt5-Debug/CMakeFiles/list_install_components.dir
+/home/ysy/TubeX/build/Qt_5_15_13_qt5-Debug/CMakeFiles/install.dir
+/home/ysy/TubeX/build/Qt_5_15_13_qt5-Debug/CMakeFiles/install/local.dir
+/home/ysy/TubeX/build/Qt_5_15_13_qt5-Debug/CMakeFiles/install/strip.dir
+/home/ysy/TubeX/build/Qt_5_15_13_qt5-Debug/CMakeFiles/TubeX_autogen_timestamp_deps.dir
+/home/ysy/TubeX/build/Qt_5_15_13_qt5-Debug/CMakeFiles/TubeX_autogen.dir
