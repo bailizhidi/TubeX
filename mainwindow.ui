@@ -16,7 +16,11 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QMdiArea" name="mdiArea"/>
+     <widget class="QMdiArea" name="mdiArea">
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -148,15 +152,183 @@ QTabBar::tab:selected {
 </string>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>4</number>
        </property>
        <property name="elideMode">
         <enum>Qt::ElideNone</enum>
        </property>
        <widget class="QWidget" name="tab_5">
         <attribute name="title">
-         <string>页</string>
+         <string>DV</string>
         </attribute>
+        <widget class="QPushButton" name="pushButton_initmodel">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>30</y>
+           <width>110</width>
+           <height>25</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>110</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>110</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(0, 0, 0);</string>
+         </property>
+         <property name="text">
+          <string>Original model</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_27">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>251</width>
+           <height>30</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100000</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="text">
+          <string>Process visualization</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_28">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>100</y>
+           <width>251</width>
+           <height>30</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100000</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="text">
+          <string>Result visualization</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_surfacemodel">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>30</y>
+           <width>110</width>
+           <height>25</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>110</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>110</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(0, 0, 0);</string>
+         </property>
+         <property name="text">
+          <string>Surface model</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_centerlinemodel">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>70</y>
+           <width>110</width>
+           <height>25</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>110</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>110</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(0, 0, 0);</string>
+         </property>
+         <property name="text">
+          <string>Midline model</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_meshmodel">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>70</y>
+           <width>110</width>
+           <height>25</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>110</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>110</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(0, 0, 0);</string>
+         </property>
+         <property name="text">
+          <string>Grid model</string>
+         </property>
+        </widget>
        </widget>
        <widget class="QWidget" name="tab">
         <property name="minimumSize">
@@ -179,7 +351,7 @@ QTabBar::tab:selected {
          </property>
          <property name="styleSheet">
           <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(154, 153, 150);</string>
+</string>
          </property>
          <property name="text">
           <string>Tube</string>
@@ -195,7 +367,7 @@ background-color: rgb(154, 153, 150);</string>
           </rect>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(154, 153, 150);</string>
+          <string notr="true"/>
          </property>
         </widget>
         <widget class="QWidget" name="formLayoutWidget">
@@ -203,7 +375,7 @@ background-color: rgb(154, 153, 150);</string>
           <rect>
            <x>-1</x>
            <y>20</y>
-           <width>251</width>
+           <width>241</width>
            <height>81</height>
           </rect>
          </property>
@@ -335,7 +507,7 @@ background-color: rgb(154, 153, 150);</string>
          </property>
          <property name="styleSheet">
           <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(154, 153, 150);</string>
+</string>
          </property>
          <property name="text">
           <string>Rotating sleeve</string>
@@ -351,7 +523,7 @@ background-color: rgb(154, 153, 150);</string>
           </rect>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(154, 153, 150);</string>
+          <string notr="true"/>
          </property>
         </widget>
         <widget class="QWidget" name="formLayoutWidget_2">
@@ -359,7 +531,7 @@ background-color: rgb(154, 153, 150);</string>
           <rect>
            <x>0</x>
            <y>120</y>
-           <width>251</width>
+           <width>241</width>
            <height>81</height>
           </rect>
          </property>
@@ -491,7 +663,7 @@ background-color: rgb(154, 153, 150);</string>
          </property>
          <property name="styleSheet">
           <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(154, 153, 150);</string>
+</string>
          </property>
          <property name="text">
           <string>Fixed sleeve</string>
@@ -507,7 +679,7 @@ background-color: rgb(154, 153, 150);</string>
           </rect>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(154, 153, 150);</string>
+          <string notr="true"/>
          </property>
         </widget>
         <widget class="QWidget" name="formLayoutWidget_3">
@@ -515,7 +687,7 @@ background-color: rgb(154, 153, 150);</string>
           <rect>
            <x>0</x>
            <y>220</y>
-           <width>251</width>
+           <width>241</width>
            <height>81</height>
           </rect>
          </property>
@@ -647,7 +819,7 @@ background-color: rgb(154, 153, 150);</string>
          </property>
          <property name="styleSheet">
           <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(154, 153, 150);</string>
+</string>
          </property>
          <property name="text">
           <string>Semi-circular sleeve</string>
@@ -663,7 +835,7 @@ background-color: rgb(154, 153, 150);</string>
           </rect>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(154, 153, 150);</string>
+          <string notr="true"/>
          </property>
         </widget>
         <widget class="QWidget" name="formLayoutWidget_4">
@@ -671,7 +843,7 @@ background-color: rgb(154, 153, 150);</string>
           <rect>
            <x>0</x>
            <y>320</y>
-           <width>251</width>
+           <width>241</width>
            <height>81</height>
           </rect>
          </property>
@@ -817,24 +989,212 @@ background-color: rgb(154, 153, 150);</string>
           <string notr="true">color: rgb(0, 0, 0);</string>
          </property>
          <property name="text">
-          <string>确定</string>
+          <string>Apply</string>
          </property>
         </widget>
        </widget>
        <widget class="QWidget" name="tab_2">
         <attribute name="title">
-         <string>页</string>
+         <string>MG</string>
         </attribute>
+        <widget class="QLabel" name="label_25">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>60</width>
+           <height>25</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="text">
+          <string>Grid size:</string>
+         </property>
+        </widget>
+        <widget class="QDoubleSpinBox" name="doubleSpinBox">
+         <property name="geometry">
+          <rect>
+           <x>70</x>
+           <y>0</y>
+           <width>65</width>
+           <height>27</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_Mesh1">
+         <property name="geometry">
+          <rect>
+           <x>180</x>
+           <y>30</y>
+           <width>75</width>
+           <height>25</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>75</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>75</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(0, 0, 0);</string>
+         </property>
+         <property name="text">
+          <string>Apply</string>
+         </property>
+        </widget>
        </widget>
        <widget class="QWidget" name="tab_3">
         <attribute name="title">
-         <string>页</string>
+         <string>ES</string>
         </attribute>
+        <widget class="QLabel" name="label_26">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>251</width>
+           <height>30</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100000</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="text">
+          <string>Click the model to extract its surface!</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_extractFace">
+         <property name="geometry">
+          <rect>
+           <x>160</x>
+           <y>30</y>
+           <width>90</width>
+           <height>25</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>90</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>90</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(0, 0, 0);</string>
+         </property>
+         <property name="text">
+          <string>Save Surface</string>
+         </property>
+        </widget>
        </widget>
        <widget class="QWidget" name="tab_4">
         <attribute name="title">
-         <string>页</string>
+         <string>EC</string>
         </attribute>
+        <widget class="QLabel" name="label_29">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>251</width>
+           <height>30</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100000</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="text">
+          <string>Bending parameters</string>
+         </property>
+        </widget>
+        <widget class="QTableView" name="tableView">
+         <property name="geometry">
+          <rect>
+           <x>-5</x>
+           <y>30</y>
+           <width>261</width>
+           <height>192</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_ExtractCenterLine">
+         <property name="geometry">
+          <rect>
+           <x>180</x>
+           <y>230</y>
+           <width>75</width>
+           <height>25</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>75</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>75</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(0, 0, 0);</string>
+         </property>
+         <property name="text">
+          <string>Apply</string>
+         </property>
+        </widget>
        </widget>
       </widget>
      </item>
@@ -859,17 +1219,17 @@ background-color: rgb(154, 153, 150);</string>
        </item>
        <item>
         <property name="text">
-         <string>Apply Bend</string>
+         <string>Mesh Generation</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Apply Clamp</string>
+         <string>Extract Surface</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Apply Pressure</string>
+         <string>Extract Centerline</string>
         </property>
        </item>
        <item>

@@ -158,6 +158,46 @@ private:
     std::map<vtkIdType, TopoDS_Face> m_faceMap;
     static void OnLeftButtonDown(vtkObject* caller, unsigned long eventId, void* clientData, void* callData);
 
+    // 3.网格划分以及显示
+    void on_meshButton_clicked();
+    void DisplayMeshedShape(const TopoDS_Shape& meshedShape);
+
+    // 4.提取外表面并显示
+    // 用OCC提取表面
+    void extractFace(); // 保存外表面
+    // 存储 OCC Face 和 VTK CellId 的映射
+    //std::map<vtkIdType, TopoDS_Face> m_faceMap;
+    // 辅助函数
+    void GetFacesSharingEdge(const TopoDS_Shape& shape, const TopoDS_Edge& edge, TopTools_ListOfShape& faceList);
+    bool AreFacesOnSameSide(const TopoDS_Face& f1, const TopoDS_Face& f2);
+    gp_Vec GetFaceNormal(const TopoDS_Face& face);
+    //static void OnLeftButtonDown(vtkObject* caller, unsigned long eventId, void* clientData, void* callData);
+    // 自定义哈希函数
+    struct ShapeHash {
+        std::size_t operator()(const TopoDS_Shape& shape) const {
+            return std::hash<TopoDS_Shape*>{}(const_cast<TopoDS_Shape*>(&shape));
+        }
+    };
+    // 自定义相等比较函数
+    struct ShapeEqual {
+        bool operator()(const TopoDS_Shape& lhs, const TopoDS_Shape& rhs) const {
+            return lhs.IsSame(rhs);
+        }
+    };
+    TopoDS_Shape FindConnectedOuterSurface(const TopoDS_Shape& shape, const TopoDS_Face& seedFace);
+
+    // 5.提取中心线
+    void on_extractCenterline_clicked();
+    void showVTKFile(const QString &vtkFilePath);
+
+    // 6.过程可视化
+    void init_model();
+    void mesh_model();
+    void surface_model();
+    void centerline_model();
+
+    // 7.结果可视化
+
 private:
     Ui::MainWindow *ui;
     QStandardItemModel *m_treeModel; // QTreeView的数据模型

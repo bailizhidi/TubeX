@@ -1051,6 +1051,8 @@ CMakeFiles/TubeX.dir/mainwindow.cpp.o: /home/ysy/TubeX/mainwindow.cpp \
  /usr/include/x86_64-linux-gnu/qt5/QtGui/qinputmethod.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QDockWidget \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qdockwidget.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QDoubleSpinBox \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qspinbox.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QFormLayout \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qformlayout.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QLayout \
@@ -1085,6 +1087,8 @@ CMakeFiles/TubeX.dir/mainwindow.cpp.o: /home/ysy/TubeX/mainwindow.cpp \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qstatusbar.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QTabWidget \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtabwidget.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QTableView \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtableview.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QTextEdit \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtextedit.h \
  /usr/include/x86_64-linux-gnu/qt5/QtGui/qtextdocument.h \
@@ -1223,4 +1227,17 @@ CMakeFiles/TubeX.dir/mainwindow.cpp.o: /home/ysy/TubeX/mainwindow.cpp \
  /usr/include/opencascade/IGESControl_Reader.hxx \
  /usr/include/opencascade/IFSelect_PrintFail.hxx \
  /usr/include/opencascade/IGESControl_Reader.lxx \
- /usr/include/vtk-9.1/vtkCallbackCommand.h
+ /usr/include/vtk-9.1/vtkCallbackCommand.h \
+ /usr/include/opencascade/BRepBuilderAPI_Copy.hxx \
+ /usr/include/opencascade/BRepBuilderAPI_ModifyShape.hxx \
+ /usr/include/opencascade/BRepTools_Modifier.hxx \
+ /usr/include/opencascade/BRepTools_Modifier.lxx \
+ /usr/include/vtk-9.1/vtkRendererCollection.h \
+ /usr/include/vtk-9.1/vtkRenderer.h /usr/include/c++/13/unordered_set \
+ /usr/include/c++/13/bits/unordered_set.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/QString \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/qstring.h \
+ /usr/include/opencascade/StlAPI_Writer.hxx \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/QProcess \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/qprocess.h \
+ /usr/include/vtk-9.1/vtkPolyDataReader.h

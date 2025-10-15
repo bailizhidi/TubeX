@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDockWidget>
+#include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
@@ -26,6 +27,7 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
+#include <QtWidgets/QTableView>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QTreeView>
@@ -74,6 +76,12 @@ public:
     QVBoxLayout *verticalLayout_Properties;
     QTabWidget *tabWidget;
     QWidget *tab_5;
+    QPushButton *pushButton_initmodel;
+    QLabel *label_27;
+    QLabel *label_28;
+    QPushButton *pushButton_surfacemodel;
+    QPushButton *pushButton_centerlinemodel;
+    QPushButton *pushButton_meshmodel;
     QWidget *tab;
     QLabel *label_Tube;
     QListWidget *listWidget;
@@ -117,8 +125,16 @@ public:
     QLineEdit *lineEdit_ArcAngle;
     QPushButton *pushButton_confirm_CADmodel;
     QWidget *tab_2;
+    QLabel *label_25;
+    QDoubleSpinBox *doubleSpinBox;
+    QPushButton *pushButton_Mesh1;
     QWidget *tab_3;
+    QLabel *label_26;
+    QPushButton *pushButton_extractFace;
     QWidget *tab_4;
+    QLabel *label_29;
+    QTableView *tableView;
+    QPushButton *pushButton_ExtractCenterLine;
     QDockWidget *dockWidget_Features;
     QWidget *dockWidgetContents_Features;
     QVBoxLayout *verticalLayout_Features;
@@ -173,6 +189,7 @@ public:
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         mdiArea = new QMdiArea(centralwidget);
         mdiArea->setObjectName(QString::fromUtf8("mdiArea"));
+        mdiArea->setStyleSheet(QString::fromUtf8(""));
 
         verticalLayout->addWidget(mdiArea);
 
@@ -232,6 +249,42 @@ public:
         tabWidget->setElideMode(Qt::ElideNone);
         tab_5 = new QWidget();
         tab_5->setObjectName(QString::fromUtf8("tab_5"));
+        pushButton_initmodel = new QPushButton(tab_5);
+        pushButton_initmodel->setObjectName(QString::fromUtf8("pushButton_initmodel"));
+        pushButton_initmodel->setGeometry(QRect(10, 30, 110, 25));
+        pushButton_initmodel->setMinimumSize(QSize(110, 25));
+        pushButton_initmodel->setMaximumSize(QSize(110, 25));
+        pushButton_initmodel->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);"));
+        label_27 = new QLabel(tab_5);
+        label_27->setObjectName(QString::fromUtf8("label_27"));
+        label_27->setGeometry(QRect(0, 0, 251, 30));
+        label_27->setMinimumSize(QSize(0, 30));
+        label_27->setMaximumSize(QSize(100000, 25));
+        label_27->setStyleSheet(QString::fromUtf8(""));
+        label_28 = new QLabel(tab_5);
+        label_28->setObjectName(QString::fromUtf8("label_28"));
+        label_28->setGeometry(QRect(0, 100, 251, 30));
+        label_28->setMinimumSize(QSize(0, 30));
+        label_28->setMaximumSize(QSize(100000, 25));
+        label_28->setStyleSheet(QString::fromUtf8(""));
+        pushButton_surfacemodel = new QPushButton(tab_5);
+        pushButton_surfacemodel->setObjectName(QString::fromUtf8("pushButton_surfacemodel"));
+        pushButton_surfacemodel->setGeometry(QRect(130, 30, 110, 25));
+        pushButton_surfacemodel->setMinimumSize(QSize(110, 25));
+        pushButton_surfacemodel->setMaximumSize(QSize(110, 25));
+        pushButton_surfacemodel->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);"));
+        pushButton_centerlinemodel = new QPushButton(tab_5);
+        pushButton_centerlinemodel->setObjectName(QString::fromUtf8("pushButton_centerlinemodel"));
+        pushButton_centerlinemodel->setGeometry(QRect(130, 70, 110, 25));
+        pushButton_centerlinemodel->setMinimumSize(QSize(110, 25));
+        pushButton_centerlinemodel->setMaximumSize(QSize(110, 25));
+        pushButton_centerlinemodel->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);"));
+        pushButton_meshmodel = new QPushButton(tab_5);
+        pushButton_meshmodel->setObjectName(QString::fromUtf8("pushButton_meshmodel"));
+        pushButton_meshmodel->setGeometry(QRect(10, 70, 110, 25));
+        pushButton_meshmodel->setMinimumSize(QSize(110, 25));
+        pushButton_meshmodel->setMaximumSize(QSize(110, 25));
+        pushButton_meshmodel->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);"));
         tabWidget->addTab(tab_5, QString());
         tab = new QWidget();
         tab->setObjectName(QString::fromUtf8("tab"));
@@ -240,14 +293,14 @@ public:
         label_Tube->setObjectName(QString::fromUtf8("label_Tube"));
         label_Tube->setGeometry(QRect(0, 0, 331, 20));
         label_Tube->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);\n"
-"background-color: rgb(154, 153, 150);"));
+""));
         listWidget = new QListWidget(tab);
         listWidget->setObjectName(QString::fromUtf8("listWidget"));
         listWidget->setGeometry(QRect(0, 20, 256, 81));
-        listWidget->setStyleSheet(QString::fromUtf8("background-color: rgb(154, 153, 150);"));
+        listWidget->setStyleSheet(QString::fromUtf8(""));
         formLayoutWidget = new QWidget(tab);
         formLayoutWidget->setObjectName(QString::fromUtf8("formLayoutWidget"));
-        formLayoutWidget->setGeometry(QRect(-1, 20, 251, 81));
+        formLayoutWidget->setGeometry(QRect(-1, 20, 241, 81));
         formLayout = new QFormLayout(formLayoutWidget);
         formLayout->setObjectName(QString::fromUtf8("formLayout"));
         formLayout->setContentsMargins(0, 0, 0, 0);
@@ -297,14 +350,14 @@ public:
         label_Tube_2->setObjectName(QString::fromUtf8("label_Tube_2"));
         label_Tube_2->setGeometry(QRect(0, 100, 331, 20));
         label_Tube_2->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);\n"
-"background-color: rgb(154, 153, 150);"));
+""));
         listWidget_2 = new QListWidget(tab);
         listWidget_2->setObjectName(QString::fromUtf8("listWidget_2"));
         listWidget_2->setGeometry(QRect(0, 120, 256, 81));
-        listWidget_2->setStyleSheet(QString::fromUtf8("background-color: rgb(154, 153, 150);"));
+        listWidget_2->setStyleSheet(QString::fromUtf8(""));
         formLayoutWidget_2 = new QWidget(tab);
         formLayoutWidget_2->setObjectName(QString::fromUtf8("formLayoutWidget_2"));
-        formLayoutWidget_2->setGeometry(QRect(0, 120, 251, 81));
+        formLayoutWidget_2->setGeometry(QRect(0, 120, 241, 81));
         formLayout_2 = new QFormLayout(formLayoutWidget_2);
         formLayout_2->setObjectName(QString::fromUtf8("formLayout_2"));
         formLayout_2->setContentsMargins(0, 0, 0, 0);
@@ -354,14 +407,14 @@ public:
         label_Tube_3->setObjectName(QString::fromUtf8("label_Tube_3"));
         label_Tube_3->setGeometry(QRect(0, 200, 331, 20));
         label_Tube_3->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);\n"
-"background-color: rgb(154, 153, 150);"));
+""));
         listWidget_3 = new QListWidget(tab);
         listWidget_3->setObjectName(QString::fromUtf8("listWidget_3"));
         listWidget_3->setGeometry(QRect(0, 220, 256, 81));
-        listWidget_3->setStyleSheet(QString::fromUtf8("background-color: rgb(154, 153, 150);"));
+        listWidget_3->setStyleSheet(QString::fromUtf8(""));
         formLayoutWidget_3 = new QWidget(tab);
         formLayoutWidget_3->setObjectName(QString::fromUtf8("formLayoutWidget_3"));
-        formLayoutWidget_3->setGeometry(QRect(0, 220, 251, 81));
+        formLayoutWidget_3->setGeometry(QRect(0, 220, 241, 81));
         formLayout_3 = new QFormLayout(formLayoutWidget_3);
         formLayout_3->setObjectName(QString::fromUtf8("formLayout_3"));
         formLayout_3->setContentsMargins(0, 0, 0, 0);
@@ -411,14 +464,14 @@ public:
         label_Tube_4->setObjectName(QString::fromUtf8("label_Tube_4"));
         label_Tube_4->setGeometry(QRect(0, 300, 331, 20));
         label_Tube_4->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);\n"
-"background-color: rgb(154, 153, 150);"));
+""));
         listWidget_4 = new QListWidget(tab);
         listWidget_4->setObjectName(QString::fromUtf8("listWidget_4"));
         listWidget_4->setGeometry(QRect(0, 320, 256, 81));
-        listWidget_4->setStyleSheet(QString::fromUtf8("background-color: rgb(154, 153, 150);"));
+        listWidget_4->setStyleSheet(QString::fromUtf8(""));
         formLayoutWidget_4 = new QWidget(tab);
         formLayoutWidget_4->setObjectName(QString::fromUtf8("formLayoutWidget_4"));
-        formLayoutWidget_4->setGeometry(QRect(0, 320, 251, 81));
+        formLayoutWidget_4->setGeometry(QRect(0, 320, 241, 81));
         formLayout_4 = new QFormLayout(formLayoutWidget_4);
         formLayout_4->setObjectName(QString::fromUtf8("formLayout_4"));
         formLayout_4->setContentsMargins(0, 0, 0, 0);
@@ -473,12 +526,54 @@ public:
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName(QString::fromUtf8("tab_2"));
+        label_25 = new QLabel(tab_2);
+        label_25->setObjectName(QString::fromUtf8("label_25"));
+        label_25->setGeometry(QRect(0, 0, 60, 25));
+        label_25->setMinimumSize(QSize(60, 25));
+        label_25->setMaximumSize(QSize(60, 25));
+        label_25->setStyleSheet(QString::fromUtf8(""));
+        doubleSpinBox = new QDoubleSpinBox(tab_2);
+        doubleSpinBox->setObjectName(QString::fromUtf8("doubleSpinBox"));
+        doubleSpinBox->setGeometry(QRect(70, 0, 65, 27));
+        pushButton_Mesh1 = new QPushButton(tab_2);
+        pushButton_Mesh1->setObjectName(QString::fromUtf8("pushButton_Mesh1"));
+        pushButton_Mesh1->setGeometry(QRect(180, 30, 75, 25));
+        pushButton_Mesh1->setMinimumSize(QSize(75, 25));
+        pushButton_Mesh1->setMaximumSize(QSize(75, 25));
+        pushButton_Mesh1->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);"));
         tabWidget->addTab(tab_2, QString());
         tab_3 = new QWidget();
         tab_3->setObjectName(QString::fromUtf8("tab_3"));
+        label_26 = new QLabel(tab_3);
+        label_26->setObjectName(QString::fromUtf8("label_26"));
+        label_26->setGeometry(QRect(0, 0, 251, 30));
+        label_26->setMinimumSize(QSize(0, 30));
+        label_26->setMaximumSize(QSize(100000, 25));
+        label_26->setStyleSheet(QString::fromUtf8(""));
+        pushButton_extractFace = new QPushButton(tab_3);
+        pushButton_extractFace->setObjectName(QString::fromUtf8("pushButton_extractFace"));
+        pushButton_extractFace->setGeometry(QRect(160, 30, 90, 25));
+        pushButton_extractFace->setMinimumSize(QSize(90, 25));
+        pushButton_extractFace->setMaximumSize(QSize(90, 25));
+        pushButton_extractFace->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);"));
         tabWidget->addTab(tab_3, QString());
         tab_4 = new QWidget();
         tab_4->setObjectName(QString::fromUtf8("tab_4"));
+        label_29 = new QLabel(tab_4);
+        label_29->setObjectName(QString::fromUtf8("label_29"));
+        label_29->setGeometry(QRect(0, 0, 251, 30));
+        label_29->setMinimumSize(QSize(0, 30));
+        label_29->setMaximumSize(QSize(100000, 25));
+        label_29->setStyleSheet(QString::fromUtf8(""));
+        tableView = new QTableView(tab_4);
+        tableView->setObjectName(QString::fromUtf8("tableView"));
+        tableView->setGeometry(QRect(-5, 30, 261, 192));
+        pushButton_ExtractCenterLine = new QPushButton(tab_4);
+        pushButton_ExtractCenterLine->setObjectName(QString::fromUtf8("pushButton_ExtractCenterLine"));
+        pushButton_ExtractCenterLine->setGeometry(QRect(180, 230, 75, 25));
+        pushButton_ExtractCenterLine->setMinimumSize(QSize(75, 25));
+        pushButton_ExtractCenterLine->setMaximumSize(QSize(75, 25));
+        pushButton_ExtractCenterLine->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);"));
         tabWidget->addTab(tab_4, QString());
 
         verticalLayout_Properties->addWidget(tabWidget);
@@ -553,7 +648,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(4);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -617,7 +712,13 @@ public:
         toolBar->setWindowTitle(QCoreApplication::translate("MainWindow", "Standard Toolbar", nullptr));
         dockWidget_ProjectTree->setWindowTitle(QCoreApplication::translate("MainWindow", "&Project Tree", nullptr));
         dockWidget_Properties->setWindowTitle(QCoreApplication::translate("MainWindow", "&Properties", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab_5), QCoreApplication::translate("MainWindow", "\351\241\265", nullptr));
+        pushButton_initmodel->setText(QCoreApplication::translate("MainWindow", "Original model", nullptr));
+        label_27->setText(QCoreApplication::translate("MainWindow", "Process visualization", nullptr));
+        label_28->setText(QCoreApplication::translate("MainWindow", "Result visualization", nullptr));
+        pushButton_surfacemodel->setText(QCoreApplication::translate("MainWindow", "Surface model", nullptr));
+        pushButton_centerlinemodel->setText(QCoreApplication::translate("MainWindow", "Midline model", nullptr));
+        pushButton_meshmodel->setText(QCoreApplication::translate("MainWindow", "Grid model", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_5), QCoreApplication::translate("MainWindow", "DV", nullptr));
         label_Tube->setText(QCoreApplication::translate("MainWindow", "Tube", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "Outer radius:", nullptr));
         lineEdit_Rout->setText(QCoreApplication::translate("MainWindow", "10", nullptr));
@@ -646,11 +747,17 @@ public:
         lineEdit_ArcThickness->setText(QCoreApplication::translate("MainWindow", "1", nullptr));
         label_12->setText(QCoreApplication::translate("MainWindow", "Radian:", nullptr));
         lineEdit_ArcAngle->setText(QCoreApplication::translate("MainWindow", "1.57", nullptr));
-        pushButton_confirm_CADmodel->setText(QCoreApplication::translate("MainWindow", "\347\241\256\345\256\232", nullptr));
+        pushButton_confirm_CADmodel->setText(QCoreApplication::translate("MainWindow", "Apply", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("MainWindow", "PM", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("MainWindow", "\351\241\265", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("MainWindow", "\351\241\265", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab_4), QCoreApplication::translate("MainWindow", "\351\241\265", nullptr));
+        label_25->setText(QCoreApplication::translate("MainWindow", "Grid size:", nullptr));
+        pushButton_Mesh1->setText(QCoreApplication::translate("MainWindow", "Apply", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("MainWindow", "MG", nullptr));
+        label_26->setText(QCoreApplication::translate("MainWindow", "Click the model to extract its surface!", nullptr));
+        pushButton_extractFace->setText(QCoreApplication::translate("MainWindow", "Save Surface", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("MainWindow", "ES", nullptr));
+        label_29->setText(QCoreApplication::translate("MainWindow", "Bending parameters", nullptr));
+        pushButton_ExtractCenterLine->setText(QCoreApplication::translate("MainWindow", "Apply", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_4), QCoreApplication::translate("MainWindow", "EC", nullptr));
         dockWidget_Features->setWindowTitle(QCoreApplication::translate("MainWindow", "&Features", nullptr));
 
         const bool __sortingEnabled = listWidget_Features->isSortingEnabled();
@@ -658,11 +765,11 @@ public:
         QListWidgetItem *___qlistwidgetitem = listWidget_Features->item(0);
         ___qlistwidgetitem->setText(QCoreApplication::translate("MainWindow", "Parametric  Modeling", nullptr));
         QListWidgetItem *___qlistwidgetitem1 = listWidget_Features->item(1);
-        ___qlistwidgetitem1->setText(QCoreApplication::translate("MainWindow", "Apply Bend", nullptr));
+        ___qlistwidgetitem1->setText(QCoreApplication::translate("MainWindow", "Mesh Generation", nullptr));
         QListWidgetItem *___qlistwidgetitem2 = listWidget_Features->item(2);
-        ___qlistwidgetitem2->setText(QCoreApplication::translate("MainWindow", "Apply Clamp", nullptr));
+        ___qlistwidgetitem2->setText(QCoreApplication::translate("MainWindow", "Extract Surface", nullptr));
         QListWidgetItem *___qlistwidgetitem3 = listWidget_Features->item(3);
-        ___qlistwidgetitem3->setText(QCoreApplication::translate("MainWindow", "Apply Pressure", nullptr));
+        ___qlistwidgetitem3->setText(QCoreApplication::translate("MainWindow", "Extract Centerline", nullptr));
         QListWidgetItem *___qlistwidgetitem4 = listWidget_Features->item(4);
         ___qlistwidgetitem4->setText(QCoreApplication::translate("MainWindow", "Define Material", nullptr));
         QListWidgetItem *___qlistwidgetitem5 = listWidget_Features->item(5);
