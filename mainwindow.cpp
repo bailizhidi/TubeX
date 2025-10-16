@@ -1616,6 +1616,12 @@ void MainWindow::on_extractCenterline_clicked()
     // 显示VTK文件
     showVTKFile(vtkFilePath);
 
+    // 生成的中心线vtk文件路径
+    QString CenterlineFilePath = scriptDir.filePath("data/output-centerline/vessel_centerline_extended_centerlines.vtk");
+
+    // 计算弯曲参数
+    Calculate_bendingparameters(CenterlineFilePath);
+
     // 成功执行
     logMessage("Centerline extraction completed successfully");
 }
@@ -1692,6 +1698,345 @@ void MainWindow::showVTKFile(const QString &vtkFilePath)
 
     logMessage("VTK file displayed successfully in MDI area: " + vtkFilePath);
 }
+
+// 计算弯曲参数
+// 定义三维点结构
+struct Point3D {
+    double x, y, z;
+    Point3D(double x = 0, double y = 0, double z = 0) : x(x), y(y), z(z) {}
+    Point3D operator-(const Point3D& other) const {
+        return Point3D(x - other.x, y - other.y, z - other.z);
+    }
+    Point3D operator+(const Point3D& other) const {
+        return Point3D(x + other.x, y + other.y, z + other.z);
+    }
+    Point3D operator*(double scalar) const {
+        return Point3D(x * scalar, y * scalar, z * scalar);
+    }
+    double magnitude() const {
+        return std::sqrt(x*x + y*y + z*z);
+    }
+    Point3D normalized() const {
+        double mag = magnitude();
+        if (mag > 1e-10) {
+            return Point3D(x/mag, y/mag, z/mag);
+        }
+        return Point3D(0, 0, 0);
+    }
+
+    // 计算叉积
+    Point3D cross(const Point3D& other) const {
+        return Point3D(
+            y * other.z - z * other.y,
+            z * other.x - x * other.z,
+            x * other.y - y * other.x
+            );
+    }
+};
+
+// 计算两点间距离
+double distance(const Point3D& p1, const Point3D& p2) {
+    return (p1 - p2).magnitude();
+}
+
+// 计算向量夹角 (弧度)
+double angleBetweenVectors(const Point3D& v1, const Point3D& v2) {
+    double dot = v1.x*v2.x + v1.y*v2.y + v1.z*v2.z;
+    double mag1 = v1.magnitude();
+    double mag2 = v2.magnitude();
+    if (mag1 == 0 || mag2 == 0) return 0.0;
+    double cosTheta = dot / (mag1 * mag2);
+    cosTheta = std::max(-1.0, std::min(1.0, cosTheta)); // 防止浮点误差导致的无效值
+    return std::acos(cosTheta);
+}
+
+// 三点确定的圆的圆心和半径
+bool fitCircle(const Point3D& p1, const Point3D& p2, const Point3D& p3, Point3D& center, double& radius) {
+    // 使用三点确定圆的几何方法
+    Point3D v1 = p2 - p1;
+    Point3D v2 = p3 - p1;
+
+    double v1v1 = v1.x*v1.x + v1.y*v1.y + v1.z*v1.z;
+    double v2v2 = v2.x*v2.x + v2.y*v2.y + v2.z*v2.z;
+    double v1v2 = v1.x*v2.x + v1.y*v2.y + v1.z*v2.z;
+
+    double denominator = 2.0 * (v1v1 * v2v2 - v1v2 * v1v2);
+    if (std::abs(denominator) < 1e-10) return false; // 三点共线
+
+    double a = v2v2 * (v1v1 - v1v2) / denominator;
+    double b = v1v1 * (v2v2 - v1v2) / denominator;
+
+    center.x = p1.x + a * v1.x + b * v2.x;
+    center.y = p1.y + a * v1.y + b * v2.y;
+    center.z = p1.z + a * v1.z + b * v2.z;
+
+    radius = distance(center, p1);
+    return true;
+}
+
+// 计算弯曲参数（支持多段弯曲）
+void MainWindow::Calculate_bendingparameters(const QString &CenterlineFilePath)
+{
+    // 将QString转换为std::string
+    std::string vtkFilePath = CenterlineFilePath.toStdString();
+
+    // 读取VTK文件
+    vtkSmartPointer<vtkPolyDataReader> reader =
+        vtkSmartPointer<vtkPolyDataReader>::New();
+    reader->SetFileName(vtkFilePath.c_str());
+    reader->Update();
+
+    vtkPolyData* polyData = reader->GetOutput();
+    if (!polyData) {
+        qDebug() << "错误: 无法读取VTK文件或文件为空";
+        return;
+    }
+
+    vtkPoints* points = polyData->GetPoints();
+    if (!points || points->GetNumberOfPoints() < 3) {
+        qDebug() << "错误: VTK文件中点的数量不足，至少需要3个点进行分析";
+        return;
+    }
+
+    int numPoints = points->GetNumberOfPoints();
+    qDebug() << "读取到" << numPoints << "个点";
+
+    // 将VTK点转换为自定义Point3D结构
+    std::vector<Point3D> centerlinePoints;
+    for (int i = 0; i < numPoints; ++i) {
+        double p[3];
+        points->GetPoint(i, p);
+        centerlinePoints.push_back(Point3D(p[0], p[1], p[2]));
+    }
+
+    // 参数设置
+    const double curvatureThreshold = 1e-6; // 曲率阈值，认为0的阈值
+    const int windowSize = 3; // 用于计算局部曲率的窗口大小
+    const int minBendLength = 5; // 弯曲段最小长度
+
+    // 存储每个点的曲率
+    std::vector<double> curvatures(numPoints, 0.0);
+
+    // 计算所有点的曲率
+    for (int i = windowSize; i < numPoints - windowSize; ++i) {
+        Point3D p_prev = centerlinePoints[i - windowSize];
+        Point3D p_curr = centerlinePoints[i];
+        Point3D p_next = centerlinePoints[i + windowSize];
+
+        Point3D v1 = p_curr - p_prev;
+        Point3D v2 = p_next - p_curr;
+
+        double angle = angleBetweenVectors(v1, v2);
+
+        // 计算近似曲率
+        double chord_length = distance(p_prev, p_next);
+        if (chord_length > 1e-6) {
+            curvatures[i] = 2.0 * std::sin(angle / 2.0) / chord_length;
+        } else {
+            curvatures[i] = 0.0;
+        }
+    }
+
+    // 清空之前的弯曲段数据
+    m_bendSegments.clear();
+
+    // 检测所有弯曲段
+    int currentIndex = windowSize;
+    while (currentIndex < numPoints - windowSize) {
+        // 寻找弯曲开始点：找到第一个曲率不为0的地方
+        int bendStartIndex = -1;
+        for (int i = currentIndex; i < numPoints - windowSize; ++i) {
+            if (curvatures[i] > curvatureThreshold) { // 曲率不为0
+                // 检查后续连续几个点是否都保持非零曲率
+                bool isBendStart = true;
+                for (int j = i; j < std::min(i + minBendLength, numPoints - windowSize); ++j) {
+                    if (curvatures[j] <= curvatureThreshold) {
+                        isBendStart = false;
+                        break;
+                    }
+                }
+
+                if (isBendStart) {
+                    bendStartIndex = i;
+                    break;
+                }
+            }
+        }
+
+        if (bendStartIndex == -1) {
+            break; // 没有更多弯曲段
+        }
+
+        // 从弯曲开始点继续寻找弯曲结束点：找到第一个曲率为0的地方
+        int bendEndIndex = -1;
+        for (int i = bendStartIndex + minBendLength; i < numPoints - windowSize; ++i) {
+            if (curvatures[i] <= curvatureThreshold) { // 曲率为0
+                // 检查后续连续几个点是否都保持曲率为0
+                bool isBendEnd = true;
+                for (int j = i; j < std::min(i + minBendLength, numPoints - windowSize); ++j) {
+                    if (curvatures[j] > curvatureThreshold) {
+                        isBendEnd = false;
+                        break;
+                    }
+                }
+
+                if (isBendEnd) {
+                    bendEndIndex = i;
+                    break;
+                }
+            }
+        }
+
+        // 如果没有找到明确的结束点，就使用最后的点
+        if (bendEndIndex == -1) {
+            bendEndIndex = numPoints - windowSize - 1;
+        }
+
+        // 确保弯曲段有足够长度
+        if (bendEndIndex - bendStartIndex < minBendLength) {
+            qDebug() << "检测到的弯曲段太短，长度为: " << (bendEndIndex - bendStartIndex);
+            currentIndex = bendStartIndex + 1; // 继续寻找下一个可能的弯曲段
+            continue;
+        }
+
+        // 计算从起点到弯曲开始点的距离
+        double bendStartDistance = 0.0;
+        for (int i = 0; i < bendStartIndex && i < numPoints - 1; ++i) {
+            bendStartDistance += distance(centerlinePoints[i], centerlinePoints[i+1]);
+        }
+
+        // 计算从起点到弯曲结束点的距离
+        double bendEndDistance = 0.0;
+        for (int i = 0; i < bendEndIndex && i < numPoints - 1; ++i) {
+            bendEndDistance += distance(centerlinePoints[i], centerlinePoints[i+1]);
+        }
+
+        // 使用弯曲开始点、中间点和结束点进行三点法计算
+        int bendMidIndex = (bendStartIndex + bendEndIndex) / 2;
+        Point3D p_start = centerlinePoints[bendStartIndex];
+        Point3D p_mid = centerlinePoints[bendMidIndex];
+        Point3D p_end = centerlinePoints[bendEndIndex];
+
+        // 计算弯曲角度（使用切线方向）
+        // 估算起始点和结束点的切线方向
+        Point3D tangent_start, tangent_end;
+        if (bendStartIndex >= 1 && bendStartIndex < numPoints - 1) {
+            tangent_start = centerlinePoints[bendStartIndex + 1] - centerlinePoints[bendStartIndex - 1];
+        } else if (bendStartIndex == 0) {
+            tangent_start = centerlinePoints[1] - centerlinePoints[0];
+        } else {
+            tangent_start = centerlinePoints[numPoints - 1] - centerlinePoints[numPoints - 2];
+        }
+
+        if (bendEndIndex >= 1 && bendEndIndex < numPoints - 1) {
+            tangent_end = centerlinePoints[bendEndIndex + 1] - centerlinePoints[bendEndIndex - 1];
+        } else if (bendEndIndex == 0) {
+            tangent_end = centerlinePoints[1] - centerlinePoints[0];
+        } else {
+            tangent_end = centerlinePoints[numPoints - 1] - centerlinePoints[numPoints - 2];
+        }
+
+        double bendAngle = angleBetweenVectors(tangent_start, tangent_end);
+
+        // 使用三点法计算弯曲半径
+        Point3D circleCenter;
+        double bendRadius = 0.0;
+        bool circleFitted = fitCircle(p_start, p_mid, p_end, circleCenter, bendRadius);
+
+        if (!circleFitted) {
+            // 如果三点共线，使用弦长和矢高估算
+            double chord_len = distance(p_start, p_end);
+            double mid_to_chord_dist = 0.0;
+
+            // 计算中点到弦的距离（矢高）
+            Point3D chord_vec = p_end - p_start;
+            double chord_mag = chord_vec.magnitude();
+            if (chord_mag > 1e-6) {
+                Point3D unit_chord = Point3D(chord_vec.x/chord_mag, chord_vec.y/chord_mag, chord_vec.z/chord_mag);
+                Point3D from_start_to_mid = p_mid - p_start;
+                double proj_len = from_start_to_mid.x*unit_chord.x + from_start_to_mid.y*unit_chord.y + from_start_to_mid.z*unit_chord.z;
+                Point3D proj_point = Point3D(p_start.x + proj_len*unit_chord.x,
+                                             p_start.y + proj_len*unit_chord.y,
+                                             p_start.z + proj_len*unit_chord.z);
+                mid_to_chord_dist = distance(p_mid, proj_point);
+            }
+
+            if (mid_to_chord_dist > 1e-6) {
+                bendRadius = (chord_len * chord_len) / (8.0 * mid_to_chord_dist) + mid_to_chord_dist / 2.0;
+            } else {
+                bendRadius = chord_len / 2.0; // 如果三点几乎共线，估算为弦长的一半
+            }
+        }
+
+        // 创建弯曲段信息
+        BendSegment segment;
+        segment.startIndex = bendStartIndex;
+        segment.endIndex = bendEndIndex;
+        segment.midIndex = bendMidIndex;
+        segment.startDistance = bendStartDistance;
+        segment.endDistance = bendEndDistance;
+        segment.angle = bendAngle * 180.0 / M_PI; // 转换为度
+        segment.radius = bendRadius;
+        segment.length = bendEndIndex - bendStartIndex + 1;
+
+        // 添加到弯曲段列表
+        m_bendSegments.push_back(segment);
+
+        // 输出当前弯曲段结果
+        qDebug() << "\n--- 弯曲段" << m_bendSegments.size() << "---";
+        qDebug() << "弯曲起始距离:" << bendStartDistance << "(从中心线起点算起)";
+        qDebug() << "弯曲结束距离:" << bendEndDistance << "(从中心线起点算起)";
+        qDebug() << "弯曲起始点索引:" << bendStartIndex;
+        qDebug() << "弯曲结束点索引:" << bendEndIndex;
+        qDebug() << "弯曲中点索引:" << bendMidIndex;
+        qDebug() << "弯曲段长度:" << (bendEndIndex - bendStartIndex + 1) << "个点";
+        qDebug() << "弯曲角度:" << (bendAngle * 180.0 / M_PI) << "度";
+        qDebug() << "弯曲半径:" << bendRadius;
+
+        // 更新搜索起始位置
+        currentIndex = bendEndIndex + minBendLength; // 确保跳过当前弯曲段，避免重复检测
+    }
+
+    // 更新UI显示
+    showBendingResults();
+
+    qDebug() << "\n=== 总计检测到" << m_bendSegments.size() << "个弯曲段 ===";
+    qDebug() << "弯曲参数计算完成";
+}
+
+void MainWindow::showBendingResults()
+{
+    ui->resultsTable->setColumnCount(4);
+
+    // 设置表头
+    ui->resultsTable->setHorizontalHeaderLabels(QStringList()
+                                            << "  Start  "
+                                            << "  End  "
+                                            << "  Angle(°)  "
+                                            << "  Radius  ");
+
+    // 清空表格
+    ui->resultsTable->setRowCount(0);
+
+    // 添加所有弯曲段信息到表格
+    for (size_t i = 0; i < m_bendSegments.size(); ++i) {
+        const BendSegment& segment = m_bendSegments[i];
+
+        int row = ui->resultsTable->rowCount();
+        ui->resultsTable->insertRow(row);
+
+        // 设置单元格内容
+        ui->resultsTable->setItem(row, 0, new QTableWidgetItem(QString::number(segment.startDistance, 'f', 1)));
+        ui->resultsTable->setItem(row, 1, new QTableWidgetItem(QString::number(segment.endDistance, 'f', 1)));
+        ui->resultsTable->setItem(row, 2, new QTableWidgetItem(QString::number(segment.angle, 'f', 2)));
+        ui->resultsTable->setItem(row, 3, new QTableWidgetItem(QString::number(segment.radius, 'f', 1)));
+    }
+
+    // 调整行高和列宽
+    ui->resultsTable->resizeRowsToContents();
+    ui->resultsTable->resizeColumnsToContents();
+}
+
 //==========6.过程可视化==========
 //原始模型
 void MainWindow::init_model(){

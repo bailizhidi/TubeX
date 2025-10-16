@@ -27,7 +27,7 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
-#include <QtWidgets/QTableView>
+#include <QtWidgets/QTableWidget>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QTreeView>
@@ -133,8 +133,8 @@ public:
     QPushButton *pushButton_extractFace;
     QWidget *tab_4;
     QLabel *label_29;
-    QTableView *tableView;
     QPushButton *pushButton_ExtractCenterLine;
+    QTableWidget *resultsTable;
     QDockWidget *dockWidget_Features;
     QWidget *dockWidgetContents_Features;
     QVBoxLayout *verticalLayout_Features;
@@ -565,15 +565,15 @@ public:
         label_29->setMinimumSize(QSize(0, 30));
         label_29->setMaximumSize(QSize(100000, 25));
         label_29->setStyleSheet(QString::fromUtf8(""));
-        tableView = new QTableView(tab_4);
-        tableView->setObjectName(QString::fromUtf8("tableView"));
-        tableView->setGeometry(QRect(-5, 30, 261, 192));
         pushButton_ExtractCenterLine = new QPushButton(tab_4);
         pushButton_ExtractCenterLine->setObjectName(QString::fromUtf8("pushButton_ExtractCenterLine"));
         pushButton_ExtractCenterLine->setGeometry(QRect(180, 230, 75, 25));
         pushButton_ExtractCenterLine->setMinimumSize(QSize(75, 25));
         pushButton_ExtractCenterLine->setMaximumSize(QSize(75, 25));
         pushButton_ExtractCenterLine->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);"));
+        resultsTable = new QTableWidget(tab_4);
+        resultsTable->setObjectName(QString::fromUtf8("resultsTable"));
+        resultsTable->setGeometry(QRect(0, 30, 256, 192));
         tabWidget->addTab(tab_4, QString());
 
         verticalLayout_Properties->addWidget(tabWidget);

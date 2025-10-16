@@ -9,6 +9,20 @@
 #include <QTimer>
 #include <QMdiArea>
 #include <QFileSystemWatcher>
+#include <cmath>
+#include <QDebug>
+#include <QString>
+#include <QLabel>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QGridLayout>
+#include <QPushButton>
+#include <QScrollArea>
+#include <QGroupBox>
+#include <QLineEdit>
+#include <QTableWidget>
+#include <QHeaderView>
+
 
 #include <QMainWindow>
 #include <QMdiArea>
@@ -78,6 +92,18 @@ QT_END_NAMESPACE
 
 // 定义一个 DataMap 类型
 typedef NCollection_DataMap<TopoDS_Shape, Handle(AIS_Shape), TopTools_ShapeMapHasher> AIS_ShapeMap;
+
+// 弯曲段信息结构
+struct BendSegment {
+    int startIndex;
+    int endIndex;
+    int midIndex;
+    double startDistance;
+    double endDistance;
+    double angle;  // 度
+    double radius;
+    double length; // 弯曲段长度（点数）
+};
 
 class MainWindow : public QMainWindow
 {
@@ -189,6 +215,8 @@ private:
     // 5.提取中心线
     void on_extractCenterline_clicked();
     void showVTKFile(const QString &vtkFilePath);
+    void Calculate_bendingparameters(const QString &CenterlineFilePath);
+    void showBendingResults();
 
     // 6.过程可视化
     void init_model();
@@ -213,5 +241,8 @@ private:
     TopoDS_Shape m_currentShape; // 保存当前加载的模型
     TopoDS_Shape m_extractedOuterSurface; // 存储提取的外壁
     TopoDS_Shape m_meshedShape; // 保存网格模型
+
+    // 弯曲段列表
+    std::vector<BendSegment> m_bendSegments;
 };
 #endif // MAINWINDOW_H

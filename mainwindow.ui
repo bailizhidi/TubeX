@@ -1157,16 +1157,6 @@ QTabBar::tab:selected {
           <string>Bending parameters</string>
          </property>
         </widget>
-        <widget class="QTableView" name="tableView">
-         <property name="geometry">
-          <rect>
-           <x>-5</x>
-           <y>30</y>
-           <width>261</width>
-           <height>192</height>
-          </rect>
-         </property>
-        </widget>
         <widget class="QPushButton" name="pushButton_ExtractCenterLine">
          <property name="geometry">
           <rect>
@@ -1193,6 +1183,16 @@ QTabBar::tab:selected {
          </property>
          <property name="text">
           <string>Apply</string>
+         </property>
+        </widget>
+        <widget class="QTableWidget" name="resultsTable">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>30</y>
+           <width>256</width>
+           <height>192</height>
+          </rect>
          </property>
         </widget>
        </widget>
